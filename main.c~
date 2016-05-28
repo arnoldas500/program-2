@@ -1,0 +1,89 @@
+//
+//  main.c
+//  program2
+//
+//  email: akurbanovas@albany.edu
+//  Created by arnoldas kurbanovas on 2/17/16.
+//  Copyright © 2016 arnoldas kurbanovas. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//#include "printToStd.c"
+//#include "binaryToText.c"
+//#include "textToBinary.c"
+#define MAXLEN 255
+
+int main(int argc, const char * argv[]) {
+    FILE *input_File;
+    FILE *output_File;
+
+
+    if((strcmp(argv[1], "-b") && argc == 4) || (strcmp(argv[1], "-t") && argc == 4)){
+
+    //if flags are not -t or -b and argumetns are not equal to 4, then exit
+    if ((strcmp(argv[1], "-t") != 0 || strcmp(argv[1], "-b") != 0) && argc != 4) {
+      //if (!((argv[1][0] == "-" && argv[1][1] == "t") || (argv[1][0] == "-" && argv[1][1] == "b") && argc == 4)) {
+        printf(" flag not specified correctly or not enough arguments\n");
+        fprintf(stderr, "Usage: %s file\n", argv[1]); exit(1);
+    }
+    
+    if((input_File = fopen(argv[2], "r")) == NULL){
+        printf("failed to open input file");
+        fprintf(stderr, "Could not open file: %s\n", argv[2]); exit(1);
+    }
+    
+    if((output_File = fopen(argv[3], "w")) == NULL){
+        printf("failed to open output file");
+        fprintf(stderr, "Could not open file: %s\n", argv[3]); exit(1);
+    }
+    
+    //if arguments correct and get -t flag
+    //converting text to bianry
+    if(strcmp(argv[1], "-t") && argc == 4){
+        //(argv[1][0] == "-" && argv[1][1] == "t"){
+        textToBinary(input_File, output_File);
+    }
+    //converting binary to text
+    if(strcmp(argv[1], "-b") && argc == 4){
+        //(argv[1][0] == "-" && argv[1][1] == "b") {
+        
+       binaryToText(input_File, output_File);
+    }
+    }
+    
+        //if flag -s specified wrong and arguments do not equal 3 then exit
+    if ((strcmp(argv[1], "-s")) && argc == 3){
+       // (((argv[1][0] == "-" && argv[1][1] == "s") && argc == 2)) {
+        if((input_File = fopen(argv[2], "r")) == NULL){
+            printf("failed to open input file");
+            fprintf(stderr, "Could not open file: %s\n", argv[2]); exit(1);
+        }
+        printToStd(input_File);
+	
+    }else if((strcmp(argv[1], "-s")!= 0) && argc != 3){
+        //(!(argv[1][0] == "-" && argv[1][1] == "s") && !(argc == 2)){
+    printf(" not enough files or incorect flag\n");
+    fprintf(stderr, "Usage: %s file\n", argv[0]); exit(1);
+    }
+    
+    return 0;
+}
+
+
+/*
+ if(!(argv[1][0] == "-" && argv[1][1] == "s") && !(argc == 2)){
+ printf(" not enough files or incorect flag");
+ fprintf(stderr, "Usage: %s file\n", argv[0]); exit(1);
+ }else if ((argv[1][0] == "-" && argv[1][1] == "s") && argc == 2){
+ if((input_File = fopen(argv[2], "r")) == NULL){
+ printf("failed to open input file");
+ fprintf(stderr, "Could not open file: %s\n", argv[2]); exit(1);
+ }
+ 
+ printToStd(input_File);
+ }
+ */
+
+
